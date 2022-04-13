@@ -36,6 +36,7 @@ return [
     'edit_product' => "Edit Product",
     'default_purchase_price' => 'Default Purchase Price',
     'default_selling_price' => 'Default Selling Price',
+    'whole_selling_price' => 'Default WholeSell Price',
     'value' => 'Value',
     'variation_name' => 'Variation Name',
     'variation_values' => 'Variation Values',

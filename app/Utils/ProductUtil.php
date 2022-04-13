@@ -37,7 +37,7 @@ class ProductUtil extends Util
      *
      * @return boolean
      */
-    public function createSingleProductVariation($product, $sku, $purchase_price, $dpp_inc_tax, $profit_percent, $selling_price, $selling_price_inc_tax, $combo_variations = [])
+    public function createSingleProductVariation($product, $sku, $purchase_price, $dpp_inc_tax, $profit_percent, $selling_price, $selling_price_inc_tax,$whole_price, $whole_price_inc_tax, $combo_variations = [])
     {
         if (!is_object($product)) {
             $product = Product::find($product);
@@ -60,6 +60,8 @@ class ProductUtil extends Util
                 'profit_percent' => $this->num_uf($profit_percent),
                 'default_sell_price' => $this->num_uf($selling_price),
                 'sell_price_inc_tax' => $this->num_uf($selling_price_inc_tax),
+                'default_whole_sell_price' => $this->num_uf($whole_price),
+                'whole_sell_price_inc_tax' => $this->num_uf($whole_price_inc_tax),
                 'combo_variations' => $combo_variations
             ];
         $variation = $product_variation->variations()->create($variation_data);

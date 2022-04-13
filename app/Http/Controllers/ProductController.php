@@ -489,7 +489,7 @@ class ProductController extends Controller
             }
             
             if ($product->type == 'single') {
-                $this->productUtil->createSingleProductVariation($product->id, $product->sku, $request->input('single_dpp'), $request->input('single_dpp_inc_tax'), $request->input('profit_percent'), $request->input('single_dsp'), $request->input('single_dsp_inc_tax'));
+                $this->productUtil->createSingleProductVariation($product->id, $product->sku, $request->input('single_dpp'), $request->input('single_dpp_inc_tax'), $request->input('profit_percent'), $request->input('single_dsp'), $request->input('single_dsp_inc_tax'), $request->input('single_wsp'), $request->input('single_wsp_inc_tax'));
             } elseif ($product->type == 'variable') {
                 if (!empty($request->input('product_variation'))) {
                     $input_variations = $request->input('product_variation');
