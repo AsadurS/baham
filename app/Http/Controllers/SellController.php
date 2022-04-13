@@ -613,6 +613,7 @@ class SellController extends Controller
      */
     public function create()
     {
+
         $sale_type = request()->get('sale_type', '');
 
         if ($sale_type == 'sales_order') {

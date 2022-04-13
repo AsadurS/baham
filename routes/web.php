@@ -135,7 +135,7 @@ Route::middleware(['setData', 'auth', 'SetSessionData', 'language', 'timezone', 
     Route::post('/import-sales', 'ImportSalesController@import');
     Route::get('/revert-sale-import/{batch}', 'ImportSalesController@revertSaleImport');
 
-    Route::get('/sells/pos/get_product_row/{variation_id}/{location_id}', 'SellPosController@getProductRow');
+    Route::get('/sells/pos/get_product_row/{variation_id}/{location_id}/{contact?}', 'SellPosController@getProductRow');
     Route::post('/sells/pos/get_payment_row', 'SellPosController@getPaymentRow');
     Route::post('/sells/pos/get-reward-details', 'SellPosController@getRewardDetails');
     Route::get('/sells/pos/get-recent-transactions', 'SellPosController@getRecentTransactions');

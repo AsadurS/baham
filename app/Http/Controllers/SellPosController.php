@@ -1418,7 +1418,7 @@ class SellPosController extends Controller
         ];
     }
 
-    private function getSellLineRow($variation_id, $location_id, $quantity, $row_count, $is_direct_sell, $so_line = null)
+    private function getSellLineRow($variation_id, $location_id, $quantity, $row_count, $is_direct_sell, $so_line = null, $contact = null )
     {
         $business_id = request()->session()->get('user.business_id');
         $business_details = $this->businessUtil->getDetails($business_id);
@@ -1444,13 +1444,12 @@ class SellPosController extends Controller
         $product->formatted_qty_available = $this->productUtil->num_f($product->qty_available, false, null, true);
 
         $sub_units = $this->productUtil->getSubUnits($business_id, $product->unit_id, false, $product->product_id);
-
         //Get customer group and change the price accordingly
         $customer_id = request()->get('customer_id', null);
         $cg = $this->contactUtil->getCustomerGroup($business_id, $customer_id);
         $percent = (empty($cg) || empty($cg->amount) || $cg->price_calculation_type != 'percentage') ? 0 : $cg->amount;
-        $product->default_sell_price = $product->default_sell_price + ($percent * $product->default_sell_price / 100);
-        $product->sell_price_inc_tax = $product->sell_price_inc_tax + ($percent * $product->sell_price_inc_tax / 100);
+        $product->default_sell_price = $contact->customer_group_id==null? $product->default_sell_price + ($percent * $product->default_sell_price / 100): $product->default_whole_sell_price ;
+        $product->sell_price_inc_tax =  $contact->customer_group_id==null ? $product->sell_price_inc_tax + ($percent * $product->sell_price_inc_tax / 100): $product->default_whole_sell_price;
 
         $tax_dropdown = TaxRate::forBusinessDropdown($business_id, true, true);
 
@@ -1516,16 +1515,16 @@ class SellPosController extends Controller
     }
 
     /**
-     * Returns the HTML row for a product in POS
-     *
-     * @param  int  $variation_id
-     * @param  int  $location_id
-     * @return \Illuminate\Http\Response
+     * @param $variation_id
+     * @param $location_id
+     * @param $customer_id
+     * @return array
+     * @throws \Throwable
      */
-    public function getProductRow($variation_id, $location_id)
+    public function getProductRow($variation_id, $location_id,  $contactId=null)
     {
         $output = [];
-
+        $contact = Contact::where('id', $contactId)->first();
         try {
             $row_count = request()->get('product_row');
             $row_count = $row_count + 1;
@@ -1548,8 +1547,7 @@ class SellPosController extends Controller
                     return $output;
                 }
             }
-
-            $output = $this->getSellLineRow($variation_id, $location_id, $quantity, $row_count, $is_direct_sell);
+            $output = $this->getSellLineRow($variation_id, $location_id, $quantity, $row_count, $is_direct_sell,null,  $contact);
 
             if ($this->transactionUtil->isModuleEnabled('modifiers')  && !$is_direct_sell) {
                 $variation = Variation::find($variation_id);
@@ -1564,6 +1562,7 @@ class SellPosController extends Controller
                 }
             }
         } catch (\Exception $e) {
+            return $e;
             \Log::emergency("File:" . $e->getFile(). "Line:" . $e->getLine(). "Message:" . $e->getMessage());
 
             $output['success'] = false;
