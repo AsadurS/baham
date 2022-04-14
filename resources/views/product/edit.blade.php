@@ -44,7 +44,7 @@
             </div>
 
             <div class="clearfix"></div>
-            
+
             <div class="col-sm-4">
               <div class="form-group">
                 {!! Form::label('unit_id', __('product.unit') . ':*') !!}
@@ -63,8 +63,8 @@
 
                 <select name="sub_unit_ids[]" class="form-control select2" multiple id="sub_unit_ids">
                   @foreach($sub_units as $sub_unit_id => $sub_unit_value)
-                    <option value="{{$sub_unit_id}}" 
-                      @if(is_array($product->sub_unit_ids) &&in_array($sub_unit_id, $product->sub_unit_ids))   selected 
+                    <option value="{{$sub_unit_id}}"
+                      @if(is_array($product->sub_unit_ids) &&in_array($sub_unit_id, $product->sub_unit_ids))   selected
                       @endif
                     >{{$sub_unit_value['name']}}</option>
                   @endforeach
@@ -84,7 +84,7 @@
               </div>
             </div>
 
-            
+
 
             <div class="clearfix"></div>
             <div class="col-sm-4 @if(!session('business.enable_category')) hide @endif">
@@ -109,7 +109,7 @@
             </div>
 
             <div class="clearfix"></div>
-            
+
             <div class="col-sm-4">
               <div class="form-group">
               <br>
@@ -239,7 +239,7 @@
               <div class="form-group">
                 {!! Form::label('rack_' . $id,  $location . ':') !!}
 
-                
+
                   @if(!empty($rack_details[$id]))
                     @if(session('business.enable_racks'))
                       {!! Form::text('product_racks_update[' . $id . '][rack]', $rack_details[$id]['rack'], ['class' => 'form-control', 'id' => 'rack_' . $id]); !!}

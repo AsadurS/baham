@@ -1,4 +1,4 @@
-@if(!session('business.enable_price_tax')) 
+@if(!session('business.enable_price_tax'))
     @php
         $default = 0;
         $class = 'hide';
@@ -35,14 +35,14 @@
             <tr>
                 <th>@lang('product.sku') @show_tooltip(__('tooltip.sub_sku'))</th>
                 <th>@lang('product.value')</th>
-                <th class="{{$class}}">@lang('product.default_purchase_price') 
+                <th class="{{$class}}">@lang('product.default_purchase_price')
                     <br/>
                     <span class="pull-left"><small><i>@lang('product.exc_of_tax')</i></small></span>
 
                     <span class="pull-right"><small><i>@lang('product.inc_of_tax')</i></small></span>
                 </th>
                 <th class="{{$class}}">@lang('product.profit_percent')</th>
-                <th class="{{$class}}">@lang('product.default_selling_price') 
+                <th class="{{$class}}">@lang('product.default_selling_price')
                 <br/>
                 <small><i><span class="dsp_label"></span></i></small>
                 </th>
@@ -92,7 +92,7 @@
                         {!! Form::text($array_name . '[' . $row_index .'][' . $variation_array_name . '][' . $variation_row_index . '][sell_price_inc_tax]', @num_format($variation->sell_price_inc_tax), ['class' => 'form-control input-sm variable_dsp_inc_tax input_number', 'placeholder' => __('product.inc_of_tax'), 'required']); !!}
                     </td>
                     <td>
-                        @php 
+                        @php
                             $action = !empty($action) ? $action : '';
                         @endphp
                         @if($action !== 'duplicate')
