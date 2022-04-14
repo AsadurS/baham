@@ -38,6 +38,13 @@ class Contact extends Authenticatable
     {
         return $this->belongsTo(\App\Business::class);
     }
+    /**
+    * Get the business that owns the user.
+    */
+    public function customerGroup(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\App\CustomerGroup::class);
+    }
 
     public function scopeActive($query)
     {

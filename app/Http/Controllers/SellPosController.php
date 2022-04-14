@@ -1448,8 +1448,8 @@ class SellPosController extends Controller
         $customer_id = request()->get('customer_id', null);
         $cg = $this->contactUtil->getCustomerGroup($business_id, $customer_id);
         $percent = (empty($cg) || empty($cg->amount) || $cg->price_calculation_type != 'percentage') ? 0 : $cg->amount;
-        $product->default_sell_price = $contact->customer_group_id==null? $product->default_sell_price + ($percent * $product->default_sell_price / 100): $product->default_whole_sell_price ;
-        $product->sell_price_inc_tax =  $contact->customer_group_id==null ? $product->sell_price_inc_tax + ($percent * $product->sell_price_inc_tax / 100): $product->default_whole_sell_price;
+        $product->default_sell_price = $contact->customer_group_id==null? $product->default_sell_price + ($percent * $product->default_sell_price / 100): $this->disPriceCalculation($product, $contact) ;
+        $product->sell_price_inc_tax =  $contact->customer_group_id==null ? $product->sell_price_inc_tax + ($percent * $product->sell_price_inc_tax / 100): $this->disPriceCalculation($product, $contact);
 
         $tax_dropdown = TaxRate::forBusinessDropdown($business_id, true, true);
 
@@ -1515,6 +1515,20 @@ class SellPosController extends Controller
     }
 
     /**
+     *
+     */
+    protected function  disPriceCalculation($product, $contact)
+    {
+
+        if($contact->customerGroup->price_calculation_type == "percentage"){
+            $price = $contact->customerGroup->amount* ($product->default_sell_price-   $product->default_purchase_price)/100;
+            $price =$product->default_sell_price - $price;
+        }else{
+           $price =  $product->default_whole_sell_price;
+        }
+        return $price;
+    }
+    /**
      * @param $variation_id
      * @param $location_id
      * @param $customer_id
@@ -1524,7 +1538,8 @@ class SellPosController extends Controller
     public function getProductRow($variation_id, $location_id,  $contactId=null)
     {
         $output = [];
-        $contact = Contact::where('id', $contactId)->first();
+        $contact = Contact::where('id', $contactId)->with('customerGroup')->first();
+
         try {
             $row_count = request()->get('product_row');
             $row_count = $row_count + 1;
@@ -1562,7 +1577,6 @@ class SellPosController extends Controller
                 }
             }
         } catch (\Exception $e) {
-            return $e;
             \Log::emergency("File:" . $e->getFile(). "Line:" . $e->getLine(). "Message:" . $e->getMessage());
 
             $output['success'] = false;
