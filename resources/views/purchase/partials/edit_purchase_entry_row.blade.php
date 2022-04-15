@@ -7,7 +7,7 @@
     $quantity_precision = config('constants.quantity_precision', 2);
 @endphp
 <div class="table-responsive">
-    <table class="table table-condensed table-bordered table-th-green text-center table-striped" 
+    <table class="table table-condensed table-bordered table-th-green text-center table-striped"
     id="purchase_entry_table">
         <thead>
               <tr>
@@ -26,6 +26,10 @@
                 </th>
                 @if(empty($is_purchase_order))
                     <th>@lang( 'purchase.unit_selling_price') <small>(@lang('product.inc_of_tax'))</small></th>
+                      <th>
+                          @lang( 'purchase.unit_whole_selling_price' )
+                          <small>(@lang('product.inc_of_tax'))</small>
+                      </th>
                     @if(session('business.enable_lot_number'))
                         <th>
                             @lang('lang_v1.lot_number')
@@ -35,6 +39,7 @@
                         <th>@lang('product.mfg_date') / @lang('product.exp_date')</th>
                     @endif
                 @endif
+
                 <th>
                     <i class="fa fa-trash" aria-hidden="true"></i>
                 </th>
@@ -42,12 +47,13 @@
         </thead>
         <tbody>
     <?php $row_count = 0; ?>
+
     @foreach($purchase->purchase_lines as $purchase_line)
         <tr @if(!empty($purchase_line->purchase_order_line) && !empty($common_settings['enable_purchase_order'])) data-purchase_order_id="{{$purchase_line->purchase_order_line->transaction_id}}" @endif>
             <td><span class="sr_number"></span></td>
             <td>
                 {{ $purchase_line->product->name }} ({{$purchase_line->variations->sub_sku}})
-                @if( $purchase_line->product->type == 'variable') 
+                @if( $purchase_line->product->type == 'variable')
                     <br/>(<b>{{ $purchase_line->variations->product_variation->name}}</b> : {{ $purchase_line->variations->name}})
                 @endif
             </td>
@@ -73,8 +79,8 @@
                     }
                 @endphp
 
-                <input type="text" 
-                name="purchases[{{$loop->index}}][quantity]" 
+                <input type="text"
+                name="purchases[{{$loop->index}}][quantity]"
                 value="{{@format_quantity($purchase_line->quantity)}}"
                 class="form-control input-sm purchase_quantity input_number mousetrap"
                 required
@@ -82,7 +88,7 @@
                 data-msg-abs_digit="{{__('lang_v1.decimal_value_not_allowed')}}"
                 @if(!empty($max_quantity))
                     data-rule-max-value="{{$max_quantity}}"
-                    data-msg-max-value="{{__('lang_v1.max_quantity_quantity_allowed', ['quantity' => $max_quantity])}}" 
+                    data-msg-max-value="{{__('lang_v1.max_quantity_quantity_allowed', ['quantity' => $max_quantity])}}"
                 @endif
                 >
 
@@ -91,7 +97,7 @@
                     <br>
                     <select name="purchases[{{$loop->index}}][sub_unit_id]" class="form-control input-sm sub_unit">
                         @foreach($purchase_line->sub_units_options as $sub_units_key => $sub_units_value)
-                            <option value="{{$sub_units_key}}" 
+                            <option value="{{$sub_units_key}}"
                                 data-multiplier="{{$sub_units_value['multiplier']}}"
                                 @if($sub_units_key == $purchase_line->sub_unit_id) selected @endif>
                                 {{$sub_units_value['name']}}
@@ -113,7 +119,7 @@
                 {!! Form::text('purchases[' . $loop->index . '][discount_percent]', number_format($purchase_line->discount_percent, $currency_precision, $currency_details->decimal_separator, $currency_details->thousand_separator), ['class' => 'form-control input-sm inline_discounts input_number', 'required']); !!} <b>%</b>
             </td>
             <td>
-                {!! Form::text('purchases[' . $loop->index . '][purchase_price]', 
+                {!! Form::text('purchases[' . $loop->index . '][purchase_price]',
                 number_format($purchase_line->purchase_price/$purchase->exchange_rate, $currency_precision, $currency_details->decimal_separator, $currency_details->thousand_separator), ['class' => 'form-control input-sm purchase_unit_cost input_number', 'required']); !!}
             </td>
             <td class="{{$hide_tax}}">
@@ -161,9 +167,9 @@
                         $profit_percent = (($sp - $pp) * 100 / $pp);
                     }
                 @endphp
-                
-                {!! Form::text('purchases[' . $loop->index . '][profit_percent]', 
-                number_format($profit_percent, $currency_precision, $currency_details->decimal_separator, $currency_details->thousand_separator), 
+
+                {!! Form::text('purchases[' . $loop->index . '][profit_percent]',
+                number_format($profit_percent, $currency_precision, $currency_details->decimal_separator, $currency_details->thousand_separator),
                 ['class' => 'form-control input-sm input_number profit_percent', 'required']); !!}
             </td>
             @if(empty($is_purchase_order))
@@ -175,6 +181,10 @@
                 @endif
 
             </td>
+                <td>
+                    {!! Form::text('purchases[' . $loop->index . '][default_whole_sell_price]', number_format($purchase_line->variations->default_whole_sell_price, $currency_precision, $currency_details->decimal_separator, $currency_details->thousand_separator), ['class' => 'form-control input-sm input_number default_whole_sell_price', 'required']); !!}
+
+                </td>
             @if(session('business.enable_lot_number'))
                 <td>
                     {!! Form::text('purchases[' . $loop->index . '][lot_number]', $purchase_line->lot_number, ['class' => 'form-control input-sm']); !!}

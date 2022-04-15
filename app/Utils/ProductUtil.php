@@ -881,7 +881,8 @@ class ProductUtil extends Util
         }
         
         if (($variation_details->default_purchase_price != $variation_data['pp_without_discount']) ||
-            ($variation_details->sell_price_inc_tax != $variation_data['sell_price_inc_tax'])
+            ($variation_details->sell_price_inc_tax != $variation_data['sell_price_inc_tax']) ||
+            ($variation_details->default_whole_sell_price != $variation_data['default_whole_sell_price'])
             ) {
             //Set default purchase price exc. tax
             $variation_details->default_purchase_price = $variation_data['pp_without_discount'];
@@ -1157,6 +1158,7 @@ class ProductUtil extends Util
      */
     public function createOrUpdatePurchaseLines($transaction, $input_data, $currency_details, $enable_product_editing, $before_status = null)
     {
+
         $updated_purchase_lines = [];
         $updated_purchase_line_ids = [0];
         $exchange_rate = !empty($transaction->exchange_rate) ? $transaction->exchange_rate : 1;
