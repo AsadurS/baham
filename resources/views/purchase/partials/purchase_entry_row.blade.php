@@ -11,7 +11,7 @@
                 <br>
                 <small class="text-muted" style="white-space: nowrap;">@lang('report.current_stock'): @if(!empty($variation->variation_location_details->first())) {{@num_format($variation->variation_location_details->first()->qty_available)}} @else 0 @endif {{ $product->unit->short_name }}</small>
             @endif
-            
+
         </td>
         <td>
             @if(!empty($purchase_order_line))
@@ -34,9 +34,9 @@
 
                 $quantity_value = !empty($imported_data) ? $imported_data['quantity'] : $quantity_value;
             @endphp
-            
-            <input type="text" 
-                name="purchases[{{$row_count}}][quantity]" 
+
+            <input type="text"
+                name="purchases[{{$row_count}}][quantity]"
                 value="{{@format_quantity($quantity_value)}}"
                 class="form-control input-sm purchase_quantity input_number mousetrap"
                 required
@@ -44,7 +44,7 @@
                 data-msg-abs_digit="{{__('lang_v1.decimal_value_not_allowed')}}"
                 @if(!empty($max_quantity))
                     data-rule-max-value="{{$max_quantity}}"
-                    data-msg-max-value="{{__('lang_v1.max_quantity_quantity_allowed', ['quantity' => $max_quantity])}}" 
+                    data-msg-max-value="{{__('lang_v1.max_quantity_quantity_allowed', ['quantity' => $max_quantity])}}"
                 @endif
             >
 
@@ -62,7 +62,7 @@
                         </option>
                     @endforeach
                 </select>
-            @else 
+            @else
                 {{ $product->unit->short_name }}
             @endif
         </td>
@@ -129,6 +129,7 @@
         <td class="@if(!session('business.enable_editing_product_from_purchase') || !empty($is_purchase_order)) hide @endif">
             {!! Form::text('purchases[' . $row_count . '][profit_percent]', number_format($variation->profit_percent, $currency_precision, $currency_details->decimal_separator, $currency_details->thousand_separator), ['class' => 'form-control input-sm input_number profit_percent', 'required']); !!}
         </td>
+
         @if(empty($is_purchase_order))
         <td>
             @if(session('business.enable_editing_product_from_purchase'))
@@ -136,6 +137,10 @@
             @else
                 {{ number_format($variation->sell_price_inc_tax, $currency_precision, $currency_details->decimal_separator, $currency_details->thousand_separator)}}
             @endif
+        </td>
+            <td>
+                {!! Form::text('purchases[' . $row_count . '][default_whole_sell_price]', number_format($variation->default_whole_sell_price, $currency_precision, $currency_details->decimal_separator, $currency_details->thousand_separator), ['class' => 'form-control input-sm input_number default_whole_sell_price', 'required']); !!}
+
         </td>
         @if(session('business.enable_lot_number'))
             @php

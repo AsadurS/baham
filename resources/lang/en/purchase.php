@@ -43,6 +43,7 @@ return [
     'net_cost' => 'Net Cost',
     'line_total' => 'Line Total',
     'unit_selling_price' => 'Unit Selling Price',
+    "unit_whole_selling_price" => "Unit whole sell Price", /* modified */
     'total_before_tax' => 'Total Before Tax',
     'net_total_amount' => 'Net Total Amount',
     'discount_type' => 'Discount Type',

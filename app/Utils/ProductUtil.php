@@ -867,6 +867,7 @@ class ProductUtil extends Util
      */
     public function updateProductFromPurchase($variation_data)
     {
+
         $variation_details = Variation::where('id', $variation_data['variation_id'])
                                         ->with(['product', 'product.product_tax'])
                                         ->first();
@@ -893,6 +894,8 @@ class ProductUtil extends Util
 
             //set sell price inc. tax
             $variation_details->default_sell_price = $this->calc_percentage_base($variation_details->sell_price_inc_tax, $tax_rate);
+
+            $variation_details->default_whole_sell_price =$variation_data['default_whole_sell_price'];
 
             //set profit margin
             $variation_details->profit_percent = $this->get_percent($variation_details->default_purchase_price, $variation_details->default_sell_price);
@@ -1214,7 +1217,8 @@ class ProductUtil extends Util
                 $variation_data['pp_without_discount'] = ($this->num_uf($data['pp_without_discount'], $currency_details)*$exchange_rate) / $multiplier;
                 $variation_data['variation_id'] = $purchase_line->variation_id;
                 $variation_data['purchase_price'] = $purchase_line->purchase_price;
-             
+                $variation_data['default_whole_sell_price'] = $data['default_whole_sell_price'];
+
                 $this->updateProductFromPurchase($variation_data);
             }
 
