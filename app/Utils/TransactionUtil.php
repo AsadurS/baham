@@ -45,6 +45,10 @@ class TransactionUtil extends Util
         $sale_type = !empty($input['type']) ? $input['type'] : 'sell';
         $invoice_scheme_id = !empty($input['invoice_scheme_id']) ? $input['invoice_scheme_id'] : null;
         $invoice_no = !empty($input['invoice_no']) ? $input['invoice_no'] : $this->getInvoiceNumber($business_id, $input['status'], $input['location_id'], $invoice_scheme_id, $sale_type);
+       $totalBuyPrice =0;
+        foreach ($input['products'] as $pr){
+            $totalBuyPrice += $pr['buy_price']* $pr['quantity'];
+        }
 
         $final_total = $uf_data ? $this->num_uf($input['final_total']) : $input['final_total'];
         $transaction = Transaction::create([
@@ -59,6 +63,7 @@ class TransactionUtil extends Util
             'ref_no' => '',
             'source' => !empty($input['source']) ? $input['source'] : null,
             'total_before_tax' => $invoice_total['total_before_tax'],
+            'total_purchage_price' => $totalBuyPrice,
             'transaction_date' => $input['transaction_date'],
             'tax_id' => !empty($input['tax_rate_id']) ? $input['tax_rate_id'] : null,
             'discount_type' => !empty($input['discount_type']) ? $input['discount_type'] : null,

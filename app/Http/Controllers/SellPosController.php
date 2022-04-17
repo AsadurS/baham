@@ -302,7 +302,6 @@ class SellPosController extends Controller
         if (!auth()->user()->can('sell.create') && !auth()->user()->can('direct_sell.access') && !auth()->user()->can('so.create') ) {
             abort(403, 'Unauthorized action.');
         }
-
         $is_direct_sale = false;
         if (!empty($request->input('is_direct_sale'))) {
             $is_direct_sale = true;
@@ -606,6 +605,7 @@ class SellPosController extends Controller
                         ];
             }
         } catch (\Exception $e) {
+            return $e;
             DB::rollBack();
             \Log::emergency("File:" . $e->getFile(). "Line:" . $e->getLine(). "Message:" . $e->getMessage());
             $msg = trans("messages.something_went_wrong");
@@ -1450,6 +1450,7 @@ class SellPosController extends Controller
         $percent = (empty($cg) || empty($cg->amount) || $cg->price_calculation_type != 'percentage') ? 0 : $cg->amount;
         $product->default_sell_price = $contact->customer_group_id==null? $product->default_sell_price + ($percent * $product->default_sell_price / 100): $this->disPriceCalculation($product, $contact) ;
         $product->sell_price_inc_tax =  $contact->customer_group_id==null ? $product->sell_price_inc_tax + ($percent * $product->sell_price_inc_tax / 100): $this->disPriceCalculation($product, $contact);
+        $product->buy_price =   $product->default_purchase_price;
 
         $tax_dropdown = TaxRate::forBusinessDropdown($business_id, true, true);
 
@@ -1507,10 +1508,9 @@ class SellPosController extends Controller
             }
 
             $output['html_content'] =  view('sale_pos.product_row')
-                        ->with(compact('product', 'row_count', 'tax_dropdown', 'enabled_modules', 'pos_settings', 'sub_units', 'discount', 'waiters', 'edit_discount', 'edit_price', 'purchase_line_id', 'warranties', 'quantity', 'is_direct_sell', 'so_line', 'is_sales_order'))
+                        ->with(compact('product', 'row_count', 'tax_dropdown', 'enabled_modules', 'pos_settings', 'sub_units', 'discount', 'waiters', 'edit_discount', 'edit_price', 'purchase_line_id', 'warranties', 'quantity', 'is_direct_sell', 'so_line', 'is_sales_order', 'contact'))
                         ->render();
         }
-
         return $output;
     }
 

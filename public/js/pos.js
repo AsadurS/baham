@@ -1502,7 +1502,7 @@ function pos_product_row(variation_id = null, purchase_line_id = null, weighing_
         var location_id = $('input#location_id').val();
         var customer_id = $('select#customer_id').val();
         var default_customer_id = $('#default_customer_id').val();
-            $('select#customer_id').attr("disabled","disabled")
+         $('select#customer_id').attr("disabled","disabled")
         var is_direct_sell = false;
         if (
             $('input[name="is_direct_sale"]').length > 0 &&
