@@ -165,7 +165,8 @@ class ProductUtil extends Util
                       'dpp_inc_tax' => $this->num_uf($v['dpp_inc_tax']),
                       'profit_percent' => $this->num_uf($v['profit_percent']),
                       'default_sell_price' => $this->num_uf($v['default_sell_price']),
-                      'sell_price_inc_tax' => $this->num_uf($v['sell_price_inc_tax'])
+                      'sell_price_inc_tax' => $this->num_uf($v['sell_price_inc_tax']),
+                      'default_whole_sell_price' => $this->num_uf($v['default_whole_sell_price'])
                     ];
                     $c++;
                     $images[] = 'variation_images_' . $key . '_' . $k;

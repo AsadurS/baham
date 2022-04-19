@@ -92,7 +92,7 @@
                         {!! Form::text($array_name . '[' . $row_index .'][' . $variation_array_name . '][' . $variation_row_index . '][sell_price_inc_tax]', @num_format($variation->sell_price_inc_tax), ['class' => 'form-control input-sm variable_dsp_inc_tax input_number', 'placeholder' => __('product.inc_of_tax'), 'required']); !!}
                     </td>
                     <td class="{{$class}}">
-                        {!! Form::text($array_name . '[' . $row_index .'][' . $variation_array_name . '][' . $variation_row_index . '][default_whole_sell_price]', @num_format($variation->default_whole_sell_price), ['class' => 'form-control input-sm variable_dsp input_number', 'placeholder' => __('product.exc_of_tax'), 'required']); !!}
+                        {!! Form::text($array_name . '[' . $row_index .'][' . $variation_array_name . '][' . $variation_row_index . '][default_whole_sell_price]', @num_format($variation->default_whole_sell_price), ['class' => 'form-control input-sm  input_number', 'placeholder' => __('product.exc_of_tax'), 'required']); !!}
 
                     </td>
                     <td>
