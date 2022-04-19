@@ -116,6 +116,7 @@
                 { data: 'waiter', name: 'ss.first_name'},
                 { data: 'business_location', name: 'bl.name'},
                 { data: 'total_before_tax', name: 'transactions.total_before_tax'},
+                { data: 'total_purchage_price', name: 'total_purchage_price'},
                 { data: 'discount_amount', name: 'transactions.discount_amount'},
                 { data: 'tax_amount', name: 'transactions.tax_amount'},
                 { data: 'final_total', name: 'final_total'}
@@ -123,16 +124,17 @@
             columnDefs: [
                     {
                         'searchable'    : false, 
-                        'targets'       : [4, 5, 6] 
+                        'targets'       : [4, 5, 6,7]
                     },
                 ],
             "fnDrawCallback": function (oSettings) {
                 $('#footer_total_amount').text(sum_table_col($('#service_staff_report'), 'final-total'));
                 $('#footer_subtotal').text(sum_table_col($('#service_staff_report'), 'total_before_tax'));
+                $('#footer_total_purchase').text(sum_table_col($('#service_staff_report'), 'total_purchage_price'));
                 $('#footer_total_tax').text(sum_table_col($('#service_staff_report'), 'total-tax'));
 
                 $('#footer_total_discount').text(sum_table_col($('#service_staff_report'), 'total-discount'));
-                
+
                 __currency_convert_recursively($('#service_staff_report'));
             }
         });
@@ -177,8 +179,6 @@
                 __currency_convert_recursively($('#service_staff_line_orders'));
             }
         });
-
-            
         //Customer Group report filter
         $('select#ssr_location_id, #ssr_date_range, #service_staff_id').change( function(){
             service_staff_report.ajax.reload();

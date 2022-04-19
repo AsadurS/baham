@@ -20,10 +20,10 @@
 
 			@if(!empty($sub_units))
                 <br>
-                <select name="unit[]" 
+                <select name="unit[]"
                 	class="form-control input-sm sub_unit">
                     @foreach($sub_units as $key => $value)
-                        <option value="{{$key}}" 
+                        <option value="{{$key}}"
                        data-multiplier="{{$value['multiplier']}}"
                        @if($unit_id == $key) selected @endif
                         >
@@ -31,7 +31,7 @@
                         </option>
                     @endforeach
                 </select>
-            @else 
+            @else
             	<input type="hidden" name="unit[]" value="{{$product->unit->id}}">
                 {{ $product->unit->short_name }}
             @endif
@@ -49,7 +49,7 @@
 			</span>
 			<input type="hidden" class="item_level_purchase_price" value="{{$variation->default_purchase_price * $quantity * $multiplier}}">
 		</td>
-		<td class="text-center">
+		<td class="text-center">a
 			<span>
 				<i class="fa fa-times remove_combo_product_entry_row text-danger" title="Remove" style="cursor:pointer;"></i>
 			</span>

@@ -4777,6 +4777,7 @@ class TransactionUtil extends Util
                 ->where('transactions.type', $sale_type)
                 ->select(
                     'transactions.id',
+                    'transactions.total_purchage_price',
                     'transactions.transaction_date',
                     'transactions.type',
                     'transactions.is_direct_sale',

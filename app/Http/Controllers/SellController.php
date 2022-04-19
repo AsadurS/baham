@@ -442,6 +442,9 @@ class SellController extends Controller
                 ->editColumn(
                     'final_total',
                     '<span class="final-total" data-orig-value="{{$final_total}}">@format_currency($final_total)</span>'
+                ) ->editColumn(
+                    'final_total',
+                    '<span class="final-total" data-orig-value="{{$final_total}}">@format_currency($final_total)</span>'
                 )
                 ->editColumn(
                     'tax_amount',
@@ -454,6 +457,10 @@ class SellController extends Controller
                 ->editColumn(
                     'total_before_tax',
                     '<span class="total_before_tax" data-orig-value="{{$total_before_tax}}">@format_currency($total_before_tax)</span>'
+                )
+                ->editColumn(
+                    'total_purchage_price',
+                    '@format_currency($total_before_tax - $total_purchage_price)'
                 )
                 ->editColumn(
                     'discount_amount',
