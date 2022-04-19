@@ -80,8 +80,13 @@
 				{!! Form::hidden('selling_price_inc_tax', @num_format(0), ['class' => 'input_number mousetrap', 'id' => 'selling_price_inc_tax']) !!}
 			</div>
 			<div class="col-sm-4">
+				@if($action == 'edit')
 				{!! Form::label('default_whole_sell_price', __('product.whole_selling_price')). ":"!!}
-				{!! Form::text('default_whole_sell_price', @num_format(0), ['class' => 'form-control input-sm input_number mousetrap']) !!}
+				{!! Form::text('default_whole_sell_price', @num_format($product_deatails->variations[0]->default_whole_sell_price), ['class' => 'form-control input-sm input_number mousetrap']) !!}
+				@else
+					{!! Form::label('default_whole_sell_price', __('product.whole_selling_price')). ":"!!}
+					{!! Form::text('default_whole_sell_price', @num_format(0), ['class' => 'form-control input-sm input_number mousetrap']) !!}
+				@endif
 			</div>
 		</div>
 	</div>
