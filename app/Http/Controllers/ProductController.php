@@ -513,7 +513,7 @@ class ProductController extends Controller
                     }
                 }
 
-                $this->productUtil->createSingleProductVariation($product->id, $product->sku, $request->input('item_level_purchase_price_total'), $request->input('purchase_price_inc_tax'), $request->input('profit_percent'), $request->input('selling_price'), $request->input('selling_price_inc_tax'), $combo_variations);
+                $this->productUtil->createSingleProductVariation($product->id, $product->sku, $request->input('item_level_purchase_price_total'), $request->input('purchase_price_inc_tax'), $request->input('profit_percent'), $request->input('selling_price'), $request->input('selling_price_inc_tax'),$request->input('default_whole_sell_price'), $request->input('default_whole_sell_price'), $combo_variations);
             }
 
             //Add product racks details.
