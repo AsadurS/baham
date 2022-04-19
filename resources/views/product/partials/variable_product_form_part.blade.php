@@ -23,7 +23,7 @@
                 @endforelse
 
             @endif
-            
+
         </tbody>
     </table>
     </div>
