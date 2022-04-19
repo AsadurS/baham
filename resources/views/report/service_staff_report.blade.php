@@ -176,7 +176,7 @@
 
                 $('#sslo_subtotal').text(sum_table_col($('#service_staff_line_orders'), 'unit_price_inc_tax'));
                 $('#sslo_total').text(sum_table_col($('#service_staff_line_orders'), 'total'));
-                $('#sslo_total').text(sum_table_col($('#service_staff_line_orders'), 'purchase_price'));
+                $('#purchase_price').text(sum_table_col($('#service_staff_line_orders'), 'purchase_price'));
 
                 __currency_convert_recursively($('#service_staff_line_orders'));
             }

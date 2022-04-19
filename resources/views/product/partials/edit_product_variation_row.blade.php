@@ -44,6 +44,10 @@
                 <th class="{{$class}}">@lang('product.profit_percent')</th>
                 <th class="{{$class}}">@lang('product.default_selling_price')
                 <br/>
+                <small>
+                    <i><span class="dsp_label"></span></i></small>
+                </th>   <th class="{{$class}}">@lang('product.whole_selling_price')
+                <br/>
                 <small><i><span class="dsp_label"></span></i></small>
                 </th>
                 <th>@lang('lang_v1.variation_images')</th>
