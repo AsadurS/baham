@@ -11,6 +11,7 @@
             <th>@lang('sale.tax')</th>
             <th>@lang('lang_v1.net_price')</th>
             <th>@lang('sale.total')</th>
+            <th>Profit</th>
         </tr>
     </thead>
     <tfoot>
@@ -22,6 +23,7 @@
             <td><span class="display_currency" id="sslo_total_tax" data-currency_symbol ="true"></span></td>
             <td><span class="display_currency" id="sslo_subtotal" data-currency_symbol ="true"></span></td>
             <td><span class="display_currency" id="sslo_total" data-currency_symbol ="true"></span></td>
+            <td><span class="display_currency" id="purchase_price" data-currency_symbol ="true"></span></td>
         </tr>
     </tfoot>
 </table>

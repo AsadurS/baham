@@ -165,7 +165,8 @@
                 { data: 'line_discount_amount', name: 'line_discount_amount'},
                 { data: 'item_tax', name: 'item_tax'},
                 { data: 'unit_price_inc_tax', name: 'unit_price_inc_tax'},
-                { data: 'total', searchable: false}
+                { data: 'total', searchable: false},
+                { data: 'purchase_price', name: 'purchase_price'},
             ],
             "fnDrawCallback": function (oSettings) {
                 $('#sslo_quantity').html(__sum_stock($('#service_staff_line_orders'), 'quantity'));
@@ -175,7 +176,8 @@
 
                 $('#sslo_subtotal').text(sum_table_col($('#service_staff_line_orders'), 'unit_price_inc_tax'));
                 $('#sslo_total').text(sum_table_col($('#service_staff_line_orders'), 'total'));
-                
+                $('#sslo_total').text(sum_table_col($('#service_staff_line_orders'), 'purchase_price'));
+
                 __currency_convert_recursively($('#service_staff_line_orders'));
             }
         });

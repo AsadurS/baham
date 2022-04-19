@@ -2883,6 +2883,7 @@ class ReportController extends Controller
             'transaction_sell_lines.line_discount_amount',
             'transaction_sell_lines.item_tax',
             'transaction_sell_lines.unit_price_inc_tax',
+            'transaction_sell_lines.purchase_price',
             DB::raw('CONCAT(COALESCE(ss.first_name, ""), COALESCE(ss.last_name, "")) as service_staff')
         );
 
@@ -2913,6 +2914,10 @@ class ReportController extends Controller
             ->addColumn(
                 'total',
                 '<span class="display_currency total" data-currency_symbol="true" data-orig-value="{{$unit_price_inc_tax * $quantity}}">{{$unit_price_inc_tax * $quantity}}</span>'
+            )
+            ->addColumn(
+                'purchase_price',
+                '{{$unit_price_inc_tax * $quantity - $purchase_price * $quantity}}'
             )
             ->editColumn(
                 'line_discount_amount',

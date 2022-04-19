@@ -356,6 +356,7 @@ class TransactionUtil extends Util
                     'unit_price' => $unit_price,
                     'line_discount_type' => !empty($product['line_discount_type']) ? $product['line_discount_type'] : null,
                     'line_discount_amount' => $line_discount_amount,
+                    'purchase_price' =>$product['buy_price'] ,
                     'item_tax' =>  $uf_item_tax / $multiplier,
                     'tax_id' => $product['tax_id'],
                     'unit_price_inc_tax' =>  $uf_unit_price_inc_tax / $multiplier,
