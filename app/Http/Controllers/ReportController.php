@@ -2917,7 +2917,8 @@ class ReportController extends Controller
             )
             ->addColumn(
                 'purchase_price',
-                '{{$unit_price_inc_tax * $quantity - $purchase_price * $quantity}}'
+                '<span class="display_currency purchase_price" data-currency_symbol="true" data-orig-value="{{$unit_price_inc_tax * $quantity - $purchase_price * $quantity}}">{{$unit_price_inc_tax * $quantity - $purchase_price * $quantity}}</span>'
+
             )
             ->editColumn(
                 'line_discount_amount',
@@ -2933,7 +2934,7 @@ class ReportController extends Controller
             )
             ->editColumn('transaction_date', '{{@format_date($transaction_date)}}')
 
-            ->rawColumns(['line_discount_amount', 'unit_price_before_discount', 'item_tax', 'unit_price_inc_tax', 'item_tax', 'quantity', 'total'])
+            ->rawColumns(['line_discount_amount', 'unit_price_before_discount', 'item_tax', 'unit_price_inc_tax', 'item_tax', 'quantity', 'total', 'purchase_price'])
                   ->make(true);
                 
         return $datatable;

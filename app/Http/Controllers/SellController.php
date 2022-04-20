@@ -460,7 +460,7 @@ class SellController extends Controller
                 )
                 ->editColumn(
                     'total_purchage_price',
-                    '@format_currency($total_before_tax - $total_purchage_price)'
+                     '<span class="total_purchage_price" data-orig-value="{{$total_before_tax - $total_purchage_price}}">@format_currency($total_before_tax - $total_purchage_price)</span>'
                 )
                 ->editColumn(
                     'discount_amount',
@@ -579,7 +579,7 @@ class SellController extends Controller
                         }
                     }]);
 
-            $rawColumns = ['final_total', 'action', 'total_paid', 'total_remaining', 'payment_status', 'invoice_no', 'discount_amount', 'tax_amount', 'total_before_tax', 'shipping_status', 'types_of_service_name', 'payment_methods', 'return_due', 'conatct_name', 'status'];
+            $rawColumns = ['final_total', 'action', 'total_paid', 'total_remaining', 'payment_status', 'invoice_no', 'discount_amount', 'tax_amount', 'total_before_tax', 'shipping_status', 'types_of_service_name', 'payment_methods', 'return_due', 'conatct_name', 'status', 'total_purchage_price'];
                 
             return $datatable->rawColumns($rawColumns)
                       ->make(true);
